@@ -1,8 +1,12 @@
 package com.thoughtworks.ketsu.domain.product;
 
+import java.util.List;
 import java.util.Map;
 
 public interface ProductRepository {
-    void create(Map<String, Object> info);
+    Product create(Map<String, Object> info);
+
+    List<Product> findAll();
+
     Product findById(int id);
 }

@@ -5,6 +5,7 @@ import com.thoughtworks.ketsu.domain.product.ProductRepository;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.ProductMapper;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Map;
 
 public class MyBatisProductRepository implements ProductRepository{
@@ -12,12 +13,18 @@ public class MyBatisProductRepository implements ProductRepository{
     ProductMapper productMapper;
 
     @Override
-    public void create(Map<String, Object> info) {
+    public Product create(Map<String, Object> info) {
         productMapper.create(info);
+        return productMapper.findById(Integer.valueOf(String.valueOf(info.get("id"))));
     }
 
     @Override
     public Product findById(int id) {
         return productMapper.findById(id);
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return productMapper.findAll();
     }
 }
