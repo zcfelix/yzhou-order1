@@ -5,6 +5,7 @@ import com.thoughtworks.ketsu.domain.product.ProductRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
 import com.thoughtworks.ketsu.support.TestHelper;
+import com.thoughtworks.ketsu.web.jersey.Routes;
 import org.glassfish.grizzly.http.util.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +13,10 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -26,6 +29,7 @@ public class ProductsApiTest extends ApiSupport{
 
     @Inject
     ProductRepository productRepository;
+    Routes routes;
 
     @Before
     public void setUp() throws Exception {
@@ -54,4 +58,13 @@ public class ProductsApiTest extends ApiSupport{
         assertThat(list.size(), is(1));
     }
 
+    @Test
+    public void should_return_200_when_get_a_product() {
+        Product product = productRepository.create(TestHelper.productMap(4, "banana", "delicious", 2.5));
+        final Response GET = get("products/" + product.getId());
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map<String, Object> productInfo = GET.readEntity(Map.class);
+        assertThat(productInfo.get("uri"), is("/products/" + product.getId()));
+    }
+    
 }

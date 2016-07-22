@@ -18,6 +18,6 @@ public class Routes {
         return URI.create(String.format("%susers/%s", baseUri, user.getUserId().id()));
     }
 
-    public URI productUrl(Product product) { return URI.create(baseUri + "products/" + product.getId()); }
+    public URI productUrl(Product product) { return URI.create("/products/" + product.getId()); }
 
 }
