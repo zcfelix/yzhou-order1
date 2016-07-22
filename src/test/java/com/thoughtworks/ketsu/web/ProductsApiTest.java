@@ -51,4 +51,11 @@ public class ProductsApiTest extends ApiSupport{
         final Response POST = post("products", productInfo);
         assertThat(POST.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
+
+    @Test
+    public void should_return_200_when_get_all_products() {
+        final Response GET = get("products");
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    }
+
 }
