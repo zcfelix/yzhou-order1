@@ -2,14 +2,14 @@ package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.domain.product.Product;
 import com.thoughtworks.ketsu.domain.product.ProductRepository;
+import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
-import com.thoughtworks.ketsu.web.validator.ProductValidator;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,18 +24,17 @@ public class ProductsApi {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createProduct(HashMap<String, Object> info) {
-        productRepository.create(info);
+        List<String> fields = new ArrayList<>();
 
-        Product product = productRepository.findById((int)info.get("id"));
-        ProductValidator productValidator = new ProductValidator();
-
-        if (productValidator.isValidate(info)) {
-            return Response.created(routes.productUrl(product)).build();
-            //return Response.status(201).build();
-        } else {
-            //throw new WebApplicationException(Response.Status.BAD_REQUEST);
-            return Response.status(400).build();
-        }
+        if(info.getOrDefault("name", "").toString().trim().isEmpty())
+            fields.add("name");
+        if(info.getOrDefault("desc", "").toString().trim().isEmpty())
+            fields.add("desc");
+        if(info.getOrDefault("price", "").toString().trim().isEmpty())
+            fields.add("price");
+        if(fields.size() > 0)
+            throw new InvalidParameterException(fields);
+        return Response.created(routes.productUrl(productRepository.create(info))).build();
     }
 
     @GET
@@ -48,9 +47,7 @@ public class ProductsApi {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Product findProduct(@PathParam("id") int id) {
-        //return productRepository.findById(id);
-        Product product = productRepository.findById(id);
-        return product;
+        return productRepository.findById(id).orElseThrow( () -> new NotFoundException("product note found"));
     }
 
 }

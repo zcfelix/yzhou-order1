@@ -12,11 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -51,7 +47,7 @@ public class ProductsApiTest extends ApiSupport{
 
     @Test
     public void should_return_products_list_when_get_all_products() {
-        Product product = productRepository.create(TestHelper.productMap(3, "pen", "writing", 1299.99));
+        productRepository.create(TestHelper.productMap(3, "pen", "writing", 1299.99));
         final Response GET = get("products");
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
         final List<Map<String, Object>> list = GET.readEntity(List.class);
@@ -66,5 +62,11 @@ public class ProductsApiTest extends ApiSupport{
         final Map<String, Object> productInfo = GET.readEntity(Map.class);
         assertThat(productInfo.get("uri"), is("/products/" + product.getId()));
     }
-    
+
+    @Test
+    public void should_return_404_when_product_not_find() {
+        Product product = productRepository.create(TestHelper.productMap(5, "duck", "animal", 43.2));
+        final Response GET = get("products/" + product.getId() + 1);
+        assertThat(GET.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
+    }
 }
