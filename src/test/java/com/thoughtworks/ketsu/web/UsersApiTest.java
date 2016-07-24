@@ -21,9 +21,9 @@ public class UsersApiTest extends ApiSupport {
     UserRepository userRepository;
 
     @Test
-    public void should_return_201_when_create_a_valid_user() {
+    public void should_return_201_and_location_when_create_a_valid_user() {
         final Response POST = post("users", TestHelper.userMap(1, "felix"));
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
-        //assertThat(Pattern.matches(".*?/users/[0-9-]*", POST.getLocation().toASCIIString()), is(true));
+        assertThat(Pattern.matches(".*?/users/[0-9-]*", POST.getLocation().toASCIIString()), is(true));
     }
 }

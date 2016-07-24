@@ -13,9 +13,11 @@ import java.util.HashMap;
 public class UsersApi {
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response createUser(HashMap<String, Object> userInfo,
                                @Context UserRepository userRepository,
                                @Context Routes routes) {
-        return Response.status(201).build();
+
+        return Response.created(routes.userUrl(userRepository.createUser(userInfo))).build();
     }
 }
