@@ -1,0 +1,9 @@
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY ,
+  user_id INT NOT NULL ,
+  name VARCHAR(255) NOT NULL ,
+  address VARCHAR(255) NOT NULL ,
+  phone VARCHAR(255) NOT NULL ,
+  total_price DOUBLE NOT NULL ,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);

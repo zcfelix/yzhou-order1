@@ -60,25 +60,17 @@ public class Order implements Record {
     @Override
     public Map<String, Object> toJson(Routes routes) {
         return new HashMap<String, Object> () {{
-            put("url", routes.orderUrl(Order.this));
+            put("uri", routes.orderUrl(Order.this));
             put("name", name);
             put("address", address);
             put("phone", phone);
             put("total_price", totalPrice);
             put("created_at", time);
-            //List<Map<String, Object>> orderItems = new ArrayList<>();
         }};
     }
 
     @Override
     public Map<String, Object> toRefJson(Routes routes) {
-        return new HashMap<String, Object>() {{
-            put("url", routes.orderUrl(Order.this));
-            put("name", name);
-            put("address", address);
-            put("phone", phone);
-            put("total_price", totalPrice);
-            put("created_at", time);
-        }};
+        return toJson(routes);
     }
 }

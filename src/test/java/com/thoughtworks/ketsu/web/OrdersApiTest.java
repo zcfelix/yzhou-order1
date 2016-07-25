@@ -49,8 +49,8 @@ public class OrdersApiTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_201_when_create_a_order() {
-        final Response POST = post(orderBaseUrl, TestHelper.orderMap(user.getId(), 1, product.getId()));
+    public void should_return_201_when_create_an_order() {
+        final Response POST = post(orderBaseUrl, TestHelper.orderMap("felix", product.getId()));
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
     }
 

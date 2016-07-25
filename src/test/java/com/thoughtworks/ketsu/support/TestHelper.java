@@ -19,18 +19,17 @@ public class TestHelper {
         }};
     }
 
-    public static Map<String, Object> orderMap(int userId, int id, int productId) {
+    public static Map<String, Object> orderMap(String name, int productId) {
         return new HashMap<String, Object>() {{
-            put("id", id);
-            put("userId", userId);
-            put("name", "kitty");
+            put("name", name);
+            put("address", "beijing");
             put("phone", "15196652287");
-            List<Map<String, Object>> items = new ArrayList<>();
-            items.add(new HashMap<String, Object>() {{
-                put("id", productId);
-                put("quantity", 200);
-            }});
-            put("items", items);
+//            List<Map<String, Object>> items = new ArrayList<>();
+//            items.add(new HashMap<String, Object>() {{
+//                put("id", productId);
+//                put("quantity", 200);
+//            }});
+//            put("items", items);
         }};
     }
 }
