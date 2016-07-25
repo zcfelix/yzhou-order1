@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -49,9 +50,9 @@ public class OrdersApiTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_201_when_create_an_order() {
+    public void should_return_201_and_location_when_create_an_order() {
         final Response POST = post(orderBaseUrl, TestHelper.orderMap("felix", product.getId()));
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
+        assertThat(Pattern.matches(".*?/users/[0-9-]*/orders/[0-9-]*", POST.getLocation().toASCIIString()), is(true));
     }
-
 }

@@ -23,7 +23,7 @@ public class TestHelper {
         return new HashMap<String, Object>() {{
             put("name", name);
             put("address", "beijing");
-            put("phone", "15196652287");
+            put("phone", "15184452287");
 //            List<Map<String, Object>> items = new ArrayList<>();
 //            items.add(new HashMap<String, Object>() {{
 //                put("id", productId);
