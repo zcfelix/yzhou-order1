@@ -31,11 +31,11 @@ public class UsersApi {
         return Response.created(routes.userUrl(userRepository.createUser(userInfo))).build();
     }
 
-    @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public User findUserById(@PathParam("id") int id,
-                             @Context UserRepository userRepository) {
-        return userRepository.findById(id).orElseThrow( () -> new NotFoundException("user not found"));
+    public UserApi findUserById(@PathParam("id") int id,
+                                @Context UserRepository userRepository) {
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundException("user not found"));
+        return new UserApi(user);
+        //return userRepository.findById(id).orElseThrow( () -> new NotFoundException("user not found"));
     }
 }
