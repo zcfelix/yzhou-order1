@@ -8,6 +8,6 @@ import java.util.Map;
 public interface UserMapper {
     User findById(@Param("id") int id);
 
-    void createUser(@Param("user") Map<String, Object> info);
+    void createUser(@Param("info") Map<String, Object> info);
 
 }

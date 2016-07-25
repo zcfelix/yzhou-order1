@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProductMapper {
-    void create(@Param("product") Map<String, Object> info);
+    void create(@Param("info") Map<String, Object> info);
 
     Product findById(@Param("id") int id);
 

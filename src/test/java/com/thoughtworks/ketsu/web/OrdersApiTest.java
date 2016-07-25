@@ -43,8 +43,8 @@ public class OrdersApiTest extends ApiSupport {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        user = userRepository.createUser(TestHelper.userMap(1, "felix"));
-        product = productRepository.create(TestHelper.productMap(1, "apple", "delicious", 2.5));
+        user = userRepository.createUser(TestHelper.userMap("felix"));
+        product = productRepository.create(TestHelper.productMap("apple", "delicious", 2.5));
         orderBaseUrl = "/users/" + user.getId() + "/orders";
     }
 

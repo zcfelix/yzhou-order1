@@ -24,20 +24,20 @@ public class UsersApiTest extends ApiSupport {
 
     @Test
     public void should_return_201_and_location_when_create_a_valid_user() {
-        final Response POST = post("users", TestHelper.userMap(1, "felix"));
+        final Response POST = post("users", TestHelper.userMap("felix"));
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
         assertThat(Pattern.matches(".*?/users/[0-9-]*", POST.getLocation().toASCIIString()), is(true));
     }
 
     @Test
     public void should_return_400_when_create_an_invalid_user() {
-        final Response POST = post("users", TestHelper.userMap(1, ""));
+        final Response POST = post("users", TestHelper.userMap(""));
         assertThat(POST.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
 
     @Test
     public void should_return_200_when_get_an_user() {
-        User user = userRepository.createUser(TestHelper.userMap(1, "felix"));
+        User user = userRepository.createUser(TestHelper.userMap("felix"));
         final Response GET = get("users/" + user.getId());
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
         final Map<String, Object> userInfo = GET.readEntity(Map.class);
@@ -46,7 +46,7 @@ public class UsersApiTest extends ApiSupport {
 
     @Test
     public void should_return_404_when_user_not_find() {
-        User user = userRepository.createUser(TestHelper.userMap(1, "felix"));
+        User user = userRepository.createUser(TestHelper.userMap("felix"));
         final Response GET = get("users/" + user.getId() + 1);
         assertThat(GET.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
     }

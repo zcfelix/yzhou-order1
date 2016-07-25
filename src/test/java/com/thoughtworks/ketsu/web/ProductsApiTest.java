@@ -34,20 +34,20 @@ public class ProductsApiTest extends ApiSupport{
 
     @Test
     public void should_return_201_and_location_when_create_valid_product() {
-        final Response POST = post("products", TestHelper.productMap(1, "pen", "writing", 1299.99));
+        final Response POST = post("products", TestHelper.productMap("pen", "writing", 1299.99));
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
         assertThat(Pattern.matches(".*?/products/[0-9-]*", POST.getLocation().toASCIIString()), is(true));
     }
 
     @Test
     public void should_return_400_when_create_invalid_product() {
-        final Response POST = post("products", TestHelper.productMap(2, "mac", "", 9300.00));
+        final Response POST = post("products", TestHelper.productMap("mac", "", 9300.00));
         assertThat(POST.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
     }
 
     @Test
     public void should_return_products_list_when_get_all_products() {
-        productRepository.create(TestHelper.productMap(3, "pen", "writing", 1299.99));
+        productRepository.create(TestHelper.productMap("pen", "writing", 1299.99));
         final Response GET = get("products");
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
         final List<Map<String, Object>> list = GET.readEntity(List.class);
@@ -56,7 +56,7 @@ public class ProductsApiTest extends ApiSupport{
 
     @Test
     public void should_return_200_when_get_a_product() {
-        Product product = productRepository.create(TestHelper.productMap(4, "banana", "delicious", 2.5));
+        Product product = productRepository.create(TestHelper.productMap("banana", "delicious", 2.5));
         final Response GET = get("products/" + product.getId());
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
         final Map<String, Object> productInfo = GET.readEntity(Map.class);
@@ -65,7 +65,7 @@ public class ProductsApiTest extends ApiSupport{
 
     @Test
     public void should_return_404_when_product_not_find() {
-        Product product = productRepository.create(TestHelper.productMap(5, "duck", "animal", 43.2));
+        Product product = productRepository.create(TestHelper.productMap("duck", "animal", 43.2));
         final Response GET = get("products/" + product.getId() + 1);
         assertThat(GET.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
     }

@@ -19,13 +19,13 @@ public class MyBatisUserRepositoryTest {
 
     @Test
     public void should_create_user_and_find_user_by_id() {
-        User user = userRepository.createUser(TestHelper.userMap(1, "felix"));
-        assertThat(user.getId(), is(1));
+        User user = userRepository.createUser(TestHelper.userMap("kitty"));
+        assertThat(user.getName(), is("kitty"));
     }
 
     @Test
     public void should_find_user_by_id() {
-        User user = userRepository.createUser(TestHelper.userMap(1, "felix"));
+        User user = userRepository.createUser(TestHelper.userMap("felix"));
         User userGot = userRepository.findById(user.getId()).get();
         assertThat(userGot.getId(), is(user.getId()));
     }
