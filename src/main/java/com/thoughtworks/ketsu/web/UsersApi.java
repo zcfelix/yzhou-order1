@@ -1,8 +1,10 @@
 package com.thoughtworks.ketsu.web;
 
-import com.thoughtworks.ketsu.domain.user.*;
+import com.thoughtworks.ketsu.domain.user.User;
+import com.thoughtworks.ketsu.domain.user.UserRepository;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
+import org.apache.ibatis.annotations.Param;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -24,8 +26,16 @@ public class UsersApi {
         List<String> fields = new ArrayList<>();
         if (userInfo.getOrDefault("name", "").toString().trim().isEmpty())
             fields.add("name");
-        if(fields.size() > 0)
+        if (fields.size() > 0)
             throw new InvalidParameterException(fields);
         return Response.created(routes.userUrl(userRepository.createUser(userInfo))).build();
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findUserById(@PathParam("id") int id,
+                             @Context UserRepository userRepository) {
+        return userRepository.findById(id).orElseThrow( () -> new NotFoundException("user not found"));
     }
 }

@@ -1,5 +1,6 @@
 package com.thoughtworks.ketsu.web;
 
+import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.domain.user.UserRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,5 +33,21 @@ public class UsersApiTest extends ApiSupport {
     public void should_return_400_when_create_an_invalid_user() {
         final Response POST = post("users", TestHelper.userMap(1, ""));
         assertThat(POST.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+    }
+
+    @Test
+    public void should_return_200_when_get_an_user() {
+        User user = userRepository.createUser(TestHelper.userMap(1, "felix"));
+        final Response GET = get("users/" + user.getId());
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map<String, Object> userInfo = GET.readEntity(Map.class);
+        assertThat(userInfo.get("uri"), is("/users/" + user.getId()));
+    }
+
+    @Test
+    public void should_return_404_when_user_not_find() {
+        User user = userRepository.createUser(TestHelper.userMap(1, "felix"));
+        final Response GET = get("users/" + user.getId() + 1);
+        assertThat(GET.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
     }
 }

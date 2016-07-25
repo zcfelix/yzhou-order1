@@ -3,12 +3,10 @@ package com.thoughtworks.ketsu.infrastructure.repositories;
 import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.domain.user.UserRepository;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.UserMapper;
-import org.apache.ibatis.annotations.Param;
 
 import javax.inject.Inject;
 import java.util.Map;
 import java.util.Optional;
-
 
 
 public class MyBatisUserRepository implements UserRepository {
@@ -16,8 +14,8 @@ public class MyBatisUserRepository implements UserRepository {
     UserMapper userMapper;
 
     @Override
-    public User findById(int id) {
-        return userMapper.findById(id);
+    public Optional<User> findById(int id) {
+        return Optional.ofNullable(userMapper.findById(id));
     }
 
     @Override

@@ -10,10 +10,6 @@ public interface UserRepository {
 
     User createUser(Map<String, Object> userInfo);
 
-    User findById(int id);
+    Optional<User> findById(int id);
 
-
-    //Optional<User> ofId(UserId id);
-
-    //User findUserByName(String userName);
 }

@@ -9,7 +9,7 @@ import java.util.Map;
 
 import static java.util.Arrays.asList;
 
-public class User extends AssertionConcern implements Record {
+public class User implements Record {
     private int id;
     private String name;
 
