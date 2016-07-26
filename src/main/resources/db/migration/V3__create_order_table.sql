@@ -5,5 +5,6 @@ CREATE TABLE orders (
   address VARCHAR(255) NOT NULL ,
   phone VARCHAR(255) NOT NULL ,
   total_price DOUBLE NOT NULL ,
+  time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );

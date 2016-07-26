@@ -24,6 +24,12 @@ public class TestHelper {
             put("name", name);
             put("address", "beijing");
             put("phone", "15184452287");
+            List<Map<String, Object>> items = new ArrayList<>();
+            items.add(new HashMap<String, Object>() {{
+                put("product_id", productId);
+                put("quantity", 200);
+            }});
+            put("order_items", items);
 //            List<Map<String, Object>> items = new ArrayList<>();
 //            items.add(new HashMap<String, Object>() {{
 //                put("id", productId);

@@ -1,12 +1,12 @@
 package com.thoughtworks.ketsu.domain.orderitem;
 
 public class OrderItem {
-    private int id;
+    private int productId;
     private int quantity;
     private double amount;
 
-    public int getId() {
-        return id;
+    public int getProductId() {
+        return productId;
     }
 
     public int getQuantity() {
