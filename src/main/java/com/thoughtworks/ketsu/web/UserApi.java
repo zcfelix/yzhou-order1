@@ -45,7 +45,8 @@ public class UserApi {
     @GET
     @Path("orders/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response findOderById(@PathParam("orderId") int orderId) {
-        return Response.status(200).build();
+    public Order findOderById(@PathParam("orderId") int orderId) {
+        return user.findById(orderId).orElseThrow(() -> new NotFoundException("order not found"));
+        // return Response.status(200).build();
     }
 }

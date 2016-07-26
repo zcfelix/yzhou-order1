@@ -12,9 +12,12 @@
         </foreach>
     </insert>
 
+    <!--<select id="findById" resultMap="records.order">-->
+        <!--SELECT *-->
+        <!--FROM orders-->
+        <!--WHERE orders.id = #{id}-->
+    <!--</select>-->
     <select id="findById" resultMap="records.order">
-        SELECT *
-        FROM orders
-        WHERE orders.id = #{id}
+        SELECT * FROM orders O , orderitems I WHERE O.id = #{id}   AND  I.order_id = #{id}
     </select>
 </mapper>

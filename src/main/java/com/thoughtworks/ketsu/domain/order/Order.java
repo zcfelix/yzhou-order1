@@ -6,6 +6,8 @@ import com.thoughtworks.ketsu.web.jersey.Routes;
 
 import java.util.*;
 
+import static com.sun.deploy.perf.DeployPerfUtil.put;
+
 public class Order implements Record {
     private int id;
     private int userId;
@@ -59,7 +61,7 @@ public class Order implements Record {
 
     @Override
     public Map<String, Object> toJson(Routes routes) {
-        return new HashMap<String, Object> () {{
+        Map<String, Object> ret = new HashMap<String, Object>() {{
             put("uri", routes.orderUrl(Order.this));
             put("name", name);
             put("address", address);
@@ -67,6 +69,16 @@ public class Order implements Record {
             put("total_price", totalPrice);
             put("created_at", time);
         }};
+        List<Map<String, Object>> orderItems = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < items.size(); i++) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("product_id", items.get(i).getProductId());
+            map.put("quantity", items.get(i).getQuantity());
+            map.put("amount", items.get(i).getAmount());
+            orderItems.add(map);
+        }
+        ret.put("order_items", orderItems);
+        return ret;
     }
 
     @Override

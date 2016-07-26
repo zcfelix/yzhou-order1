@@ -7,11 +7,13 @@ import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.OrderMapper;
 import com.thoughtworks.ketsu.infrastructure.mybatis.mappers.ProductMapper;
 import com.thoughtworks.ketsu.infrastructure.records.Record;
 import com.thoughtworks.ketsu.web.jersey.Routes;
+import jdk.nashorn.internal.runtime.options.Option;
 
 import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 
@@ -68,5 +70,9 @@ public class User implements Record {
         info.put("total_price", price);
         orderMapper.save(info);
         return orderMapper.findById(Integer.valueOf(info.get("id").toString()));
+    }
+
+    public Optional<Order> findById(int id) {
+        return Optional.ofNullable(orderMapper.findById(id));
     }
 }

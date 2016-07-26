@@ -23,6 +23,7 @@
         <result property="address" column="address" />
         <result property="phone" column="phone" />
         <result property="totalPrice" column="total_price" />
+        <result property="time" column="time" />
         <collection property="items" ofType="com.thoughtworks.ketsu.domain.orderitem.OrderItem">
             <id property="productId" column="product_id" />
             <result property="quantity" column="quantity" />

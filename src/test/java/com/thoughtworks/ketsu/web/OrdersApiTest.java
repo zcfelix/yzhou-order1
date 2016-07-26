@@ -73,4 +73,17 @@ public class OrdersApiTest extends ApiSupport {
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
     }
 
+    @Test
+    public void should_return_details_when_get_an_order() {
+        Order order = user.createOrder(TestHelper.orderMap("felix", product.getId()));
+        final Response GET = get(orderBaseUrl + "/" + order.getId());
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map<String, Object> ret = GET.readEntity(Map.class);
+        assertThat(ret.get("uri"), is("/users/" + user.getId() + "/orders/" + order.getId()));
+        List<Map<String, Object>> items = (List<Map<String, Object>>)ret.get("order_items");
+        assertThat(items.size(), is(1));
+        assertThat(items.get(0).get("product_id").toString(), is(String.valueOf(product.getId())));
+    }
+
+
 }
