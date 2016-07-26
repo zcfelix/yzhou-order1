@@ -67,6 +67,12 @@ public class OrdersApiTest extends ApiSupport {
     }
 
     @Test
+    public void should_return_200_when_get_all_orders_for_an_user() {
+        final Response GET = get(orderBaseUrl);
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    }
+
+    @Test
     public void should_return_200_when_get_an_order() {
         Order order = user.createOrder(TestHelper.orderMap("felix", product.getId()));
         final Response GET = get(orderBaseUrl + "/" + order.getId());
@@ -84,6 +90,5 @@ public class OrdersApiTest extends ApiSupport {
         assertThat(items.size(), is(1));
         assertThat(items.get(0).get("product_id").toString(), is(String.valueOf(product.getId())));
     }
-
 
 }

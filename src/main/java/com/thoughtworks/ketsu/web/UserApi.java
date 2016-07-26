@@ -43,6 +43,13 @@ public class UserApi {
     }
 
     @GET
+    @Path("orders")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listOrdersForUser() {
+        return Response.status(200).build();
+    }
+
+    @GET
     @Path("orders/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
     public Order findOderById(@PathParam("orderId") int orderId) {
