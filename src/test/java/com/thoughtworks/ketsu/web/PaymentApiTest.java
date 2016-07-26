@@ -1,6 +1,7 @@
 package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.domain.order.Order;
+import com.thoughtworks.ketsu.domain.order.Payment;
 import com.thoughtworks.ketsu.domain.product.Product;
 import com.thoughtworks.ketsu.domain.product.ProductRepository;
 import com.thoughtworks.ketsu.domain.user.User;
@@ -65,8 +66,11 @@ public class PaymentApiTest extends ApiSupport{
     }
 
     @Test
-    public void should_return_200_when_get_a_payment() {
+    public void should_return_200_and_details_when_get_a_payment() {
+        Payment payment = order.createPayment(TestHelper.paymentMap());
         final Response GET = get(paymentBaseUrl);
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final Map<String, Object> ret = GET.readEntity(Map.class);
+        assertThat(ret.get("uri"), is("/users/" + user.getId() + "/orders/" + order.getId() + "/payment"));
     }
 }

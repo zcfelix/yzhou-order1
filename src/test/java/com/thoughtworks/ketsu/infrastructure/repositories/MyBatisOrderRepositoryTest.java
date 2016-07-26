@@ -58,4 +58,13 @@ public class MyBatisOrderRepositoryTest {
         Payment payment = order.createPayment(TestHelper.paymentMap());
         assertThat(payment.getOrderId(), is(order.getId()));
     }
+
+    @Test
+    public void should_get_payment_for_order() {
+        Order order = user.createOrder(TestHelper.orderMap("kitty", product.getId()));
+        Payment payment = order.createPayment(TestHelper.paymentMap());
+
+        Payment ret = order.findPayment().get();
+        assertThat(ret.getOrderId(), is(payment.getOrderId()));
+    }
 }

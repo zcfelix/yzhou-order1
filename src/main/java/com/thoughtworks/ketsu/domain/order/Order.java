@@ -68,6 +68,10 @@ public class Order implements Record {
         return paymentMapper.findByOrderId(id);
     }
 
+    public Optional<Payment> findPayment() {
+        return Optional.ofNullable(paymentMapper.findByOrderId(id));
+    }
+
     @Override
     public Map<String, Object> toJson(Routes routes) {
         Map<String, Object> ret = new HashMap<String, Object>() {{
