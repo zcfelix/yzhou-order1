@@ -25,4 +25,6 @@ public class InvalidParameterException extends RuntimeException {
             invalidParameterInfos.add(new InvalidParameterInfo(invalidParameter.get(i)));
         }
     }
+
+    public List<InvalidParameterInfo> getInvalidParameterInfos() { return invalidParameterInfos; }
 }

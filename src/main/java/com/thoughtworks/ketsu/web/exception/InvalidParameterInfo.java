@@ -18,7 +18,7 @@ public class InvalidParameterInfo implements Record {
     public Map<String, Object> toJson(Routes routes) {
         return new HashMap<String, Object>(){{
             put("field", field);
-            put("message", field + "can not be empty");
+            put("message", field + " can not be empty");
         }};
     }
 

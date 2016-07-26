@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
 import java.util.*;
@@ -50,9 +51,17 @@ public class OrdersApiTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_201_and_location_when_create_an_order() {
+    public void should_return_201_and_location_when_create_a_valid_order() {
         final Response POST = post(orderBaseUrl, TestHelper.orderMap("felix", product.getId()));
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
         assertThat(Pattern.matches(".*?/users/[0-9-]*/orders/[0-9-]*", POST.getLocation().toASCIIString()), is(true));
+    }
+
+    @Test
+    public void should_return_400_when_create_an_invalid_order() {
+        final Response POST = post(orderBaseUrl, TestHelper.orderMap("", product.getId()));
+        assertThat(POST.getStatus(), is(HttpStatus.BAD_REQUEST_400.getStatusCode()));
+        final List<Map<String, Object>> errorInfo = POST.readEntity(List.class);
+        assertThat(errorInfo.size(), is(1));
     }
 }
