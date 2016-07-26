@@ -41,4 +41,11 @@ public class UserApi {
         return Response.created(routes.orderUrl(order)).build();
         //return Response.status(201).build();
     }
+
+    @GET
+    @Path("orders/{orderId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findOderById(@PathParam("orderId") int orderId) {
+        return Response.status(200).build();
+    }
 }

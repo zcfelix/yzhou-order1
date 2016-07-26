@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 
@@ -64,4 +65,12 @@ public class OrdersApiTest extends ApiSupport {
         final List<Map<String, Object>> errorInfo = POST.readEntity(List.class);
         assertThat(errorInfo.size(), is(1));
     }
+
+    @Test
+    public void should_return_200_when_get_an_order() {
+        Order order = user.createOrder(TestHelper.orderMap("felix", product.getId()));
+        final Response GET = get(orderBaseUrl + "/" + order.getId());
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    }
+
 }
