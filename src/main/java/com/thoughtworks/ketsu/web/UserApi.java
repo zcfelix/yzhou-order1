@@ -65,7 +65,15 @@ public class UserApi {
     public Response createPaymentForOrder(Map<String, Object> info,
                                           @PathParam("orderId") int orderId,
                                           @Context Routes routes) {
-
-        return Response.status(201).build();
+        List<String> fields = new ArrayList<>();
+        if(info.getOrDefault("pay_type", "").toString().trim().isEmpty())
+            fields.add("pay_type");
+        if(info.getOrDefault("amount", "").toString().trim().isEmpty())
+            fields.add("amount");
+        if(fields.size() > 0)
+            throw new InvalidParameterException(fields);
+        Order order = user.findById(orderId).orElseThrow(() -> new NotFoundException("order not found"));
+        return Response.created(routes.paymentUrl(order.createPayment(info), user.getId())).build();
+        //return Response.status(201).build();
     }
 }

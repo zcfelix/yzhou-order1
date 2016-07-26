@@ -1,35 +1,24 @@
 package com.thoughtworks.ketsu.web;
 
 import com.thoughtworks.ketsu.domain.order.Order;
-import com.thoughtworks.ketsu.domain.orderitem.OrderItem;
 import com.thoughtworks.ketsu.domain.product.Product;
 import com.thoughtworks.ketsu.domain.product.ProductRepository;
 import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.domain.user.UserRepository;
-import com.thoughtworks.ketsu.infrastructure.repositories.MyBatisProductRepository;
 import com.thoughtworks.ketsu.support.ApiSupport;
 import com.thoughtworks.ketsu.support.ApiTestRunner;
 import com.thoughtworks.ketsu.support.TestHelper;
 import org.glassfish.grizzly.http.util.HttpStatus;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
-
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import static com.sun.tools.doclint.Entity.or;
-import static com.sun.tools.doclint.Entity.prod;
-import static com.thoughtworks.ketsu.support.TestHelper.*;
-import static javafx.scene.input.KeyCode.T;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 

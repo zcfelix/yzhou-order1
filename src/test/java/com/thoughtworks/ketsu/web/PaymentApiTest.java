@@ -16,6 +16,8 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 
+import java.util.regex.Pattern;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -46,6 +48,8 @@ public class PaymentApiTest extends ApiSupport{
     @Test
     public void should_return_201_when_create_payment() {
         final Response POST = post(paymentBaseUrl, TestHelper.paymentMap());
+        String test = POST.getLocation().toASCIIString();
         assertThat(POST.getStatus(), is(HttpStatus.CREATED_201.getStatusCode()));
+        assertThat(Pattern.matches(".*?/users/[0-9-]*/orders/[0-9-]*/payment", POST.getLocation().toASCIIString()), is(true));
     }
 }

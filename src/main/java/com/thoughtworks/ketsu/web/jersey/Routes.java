@@ -1,6 +1,7 @@
 package com.thoughtworks.ketsu.web.jersey;
 
 import com.thoughtworks.ketsu.domain.order.Order;
+import com.thoughtworks.ketsu.domain.order.Payment;
 import com.thoughtworks.ketsu.domain.product.Product;
 import com.thoughtworks.ketsu.domain.user.User;
 
@@ -21,4 +22,7 @@ public class Routes {
 
     public URI orderUrl(Order order) { return URI.create("/users/" + order.getUserId() + "/orders/" + order.getId()); }
 
+    public URI paymentUrl(Payment payment, int userId) {
+        return URI.create("/users/" + userId + "/orders/" + payment.getOrderId() + "/payment");
+    }
 }

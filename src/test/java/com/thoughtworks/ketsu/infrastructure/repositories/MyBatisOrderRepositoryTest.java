@@ -1,8 +1,7 @@
 package com.thoughtworks.ketsu.infrastructure.repositories;
 
-import com.sun.javafx.collections.MappingChange;
 import com.thoughtworks.ketsu.domain.order.Order;
-import com.thoughtworks.ketsu.domain.orderitem.OrderItem;
+import com.thoughtworks.ketsu.domain.order.Payment;
 import com.thoughtworks.ketsu.domain.product.Product;
 import com.thoughtworks.ketsu.domain.product.ProductRepository;
 import com.thoughtworks.ketsu.domain.user.User;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -52,5 +50,12 @@ public class MyBatisOrderRepositoryTest {
         List<Order> list = user.listOrder();
         assertThat(list.size(), is(1));
         assertThat(list.get(0).getName(), is("kitty"));
+    }
+
+    @Test
+    public void should_create_payment_for_order() {
+        Order order = user.createOrder(TestHelper.orderMap("kitty", product.getId()));
+        Payment payment = order.createPayment(TestHelper.paymentMap());
+        assertThat(payment.getOrderId(), is(order.getId()));
     }
 }
