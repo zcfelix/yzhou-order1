@@ -63,4 +63,10 @@ public class PaymentApiTest extends ApiSupport{
         final List<Map<String, Object>> errorInfo = POST.readEntity(List.class);
         assertThat(errorInfo.size(), is(2));
     }
+
+    @Test
+    public void should_return_200_when_get_a_payment() {
+        final Response GET = get(paymentBaseUrl);
+        assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+    }
 }
