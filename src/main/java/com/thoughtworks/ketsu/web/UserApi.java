@@ -45,8 +45,8 @@ public class UserApi {
     @GET
     @Path("orders")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listOrdersForUser() {
-        return Response.status(200).build();
+    public List<Order> listOrdersForUser() {
+        return user.listOrder();
     }
 
     @GET
@@ -54,6 +54,5 @@ public class UserApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Order findOderById(@PathParam("orderId") int orderId) {
         return user.findById(orderId).orElseThrow(() -> new NotFoundException("order not found"));
-        // return Response.status(200).build();
     }
 }

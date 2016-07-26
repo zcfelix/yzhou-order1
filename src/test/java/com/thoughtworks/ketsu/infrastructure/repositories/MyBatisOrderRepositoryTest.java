@@ -46,4 +46,11 @@ public class MyBatisOrderRepositoryTest {
         assertThat(order.getPhone(), is("15184452287"));
     }
 
+    @Test
+    public void should_list_orders_for_user() {
+        Order order = user.createOrder(TestHelper.orderMap("kitty", product.getId()));
+        List<Order> list = user.listOrder();
+        assertThat(list.size(), is(1));
+        assertThat(list.get(0).getName(), is("kitty"));
+    }
 }

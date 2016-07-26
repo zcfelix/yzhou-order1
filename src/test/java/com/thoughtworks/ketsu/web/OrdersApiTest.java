@@ -25,6 +25,8 @@ import javax.ws.rs.core.Response;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static com.sun.tools.doclint.Entity.or;
+import static com.sun.tools.doclint.Entity.prod;
 import static com.thoughtworks.ketsu.support.TestHelper.*;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -67,9 +69,13 @@ public class OrdersApiTest extends ApiSupport {
     }
 
     @Test
-    public void should_return_200_when_get_all_orders_for_an_user() {
+    public void should_return_200_and_details_when_get_all_orders_for_an_user() {
+        Order order = user.createOrder(TestHelper.orderMap("felix", product.getId()));
         final Response GET = get(orderBaseUrl);
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
+        final List<Map<String, Object>> ret = GET.readEntity(List.class);
+        assertThat(ret.size(), is(1));
+        assertThat(ret.get(0).get("uri"), is("/users/" + user.getId() + "/orders/" + order.getId()));
     }
 
     @Test
