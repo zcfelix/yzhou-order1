@@ -5,7 +5,6 @@ import com.thoughtworks.ketsu.domain.user.User;
 import com.thoughtworks.ketsu.web.exception.InvalidParameterException;
 import com.thoughtworks.ketsu.web.jersey.Routes;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -17,11 +16,15 @@ import java.util.Map;
 public class UserApi {
     private User user;
 
-    public UserApi(User user) { this.user = user; }
+    public UserApi(User user) {
+        this.user = user;
+    }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public User getUser() { return user; }
+    public User getUser() {
+        return user;
+    }
 
     @POST
     @Path("orders")
@@ -54,5 +57,15 @@ public class UserApi {
     @Produces(MediaType.APPLICATION_JSON)
     public Order findOderById(@PathParam("orderId") int orderId) {
         return user.findById(orderId).orElseThrow(() -> new NotFoundException("order not found"));
+    }
+
+    @POST
+    @Path("orders/{orderId}/payment")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createPaymentForOrder(Map<String, Object> info,
+                                          @PathParam("orderId") int orderId,
+                                          @Context Routes routes) {
+
+        return Response.status(201).build();
     }
 }

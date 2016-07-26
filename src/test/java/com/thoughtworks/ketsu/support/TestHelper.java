@@ -30,12 +30,13 @@ public class TestHelper {
                 put("quantity", 200);
             }});
             put("order_items", items);
-//            List<Map<String, Object>> items = new ArrayList<>();
-//            items.add(new HashMap<String, Object>() {{
-//                put("id", productId);
-//                put("quantity", 200);
-//            }});
-//            put("items", items);
+        }};
+    }
+
+    public static Map<String, Object> paymentMap() {
+        return new HashMap<String, Object>() {{
+            put("pay_type", "CASH");
+            put("amount", 100);
         }};
     }
 }
