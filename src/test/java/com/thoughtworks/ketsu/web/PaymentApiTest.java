@@ -66,11 +66,18 @@ public class PaymentApiTest extends ApiSupport{
     }
 
     @Test
-    public void should_return_200_and_details_when_get_a_payment() {
+    public void should_return_200_and_details_when_get_a_valid_payment() {
         Payment payment = order.createPayment(TestHelper.paymentMap());
         final Response GET = get(paymentBaseUrl);
         assertThat(GET.getStatus(), is(HttpStatus.OK_200.getStatusCode()));
         final Map<String, Object> ret = GET.readEntity(Map.class);
         assertThat(ret.get("uri"), is("/users/" + user.getId() + "/orders/" + order.getId() + "/payment"));
+    }
+
+    @Test
+    public void should_return_404_when_get_an_invalid_payment() {
+        //Payment payment = order.createPayment(TestHelper.paymentMap());
+        final Response GET = get(paymentBaseUrl);
+        assertThat(GET.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
     }
 }
