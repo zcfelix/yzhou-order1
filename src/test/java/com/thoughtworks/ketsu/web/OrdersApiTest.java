@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import static com.sun.tools.doclint.Entity.or;
 import static com.sun.tools.doclint.Entity.prod;
 import static com.thoughtworks.ketsu.support.TestHelper.*;
+import static javafx.scene.input.KeyCode.T;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -95,6 +96,13 @@ public class OrdersApiTest extends ApiSupport {
         List<Map<String, Object>> items = (List<Map<String, Object>>)ret.get("order_items");
         assertThat(items.size(), is(1));
         assertThat(items.get(0).get("product_id").toString(), is(String.valueOf(product.getId())));
+    }
+
+    @Test
+    public void should_return_404_when_get_not_find_an_order() {
+        Order order = user.createOrder(TestHelper.orderMap("felix", product.getId()));
+        final Response GET = get(orderBaseUrl + "/" + (order.getId() + 1));
+        assertThat(GET.getStatus(), is(HttpStatus.NOT_FOUND_404.getStatusCode()));
     }
 
 }
